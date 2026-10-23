@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Search, ChevronDown, ChevronRight, Plus, Zap, LayoutGrid, List, Eye, X, Info } from 'lucide-react';
-import { COMPONENTS, COMPONENT_CATEGORIES, searchComponents, getComponentsByCategory } from '../../data/components';
+import { Search, ChevronDown, ChevronRight, Plus, Zap, LayoutGrid, List, Eye, X } from 'lucide-react';
+import { COMPONENTS, COMPONENT_CATEGORIES, COMMON_PARTS, searchComponents, getComponentsByCategory } from '../../data/components';
 import { useCircuitStore, useAppStore } from '../../store/store';
 import ComponentIllustration from '../Common/ComponentImage';
 import './ComponentPanel.css';
@@ -50,7 +50,7 @@ export default function ComponentPanel() {
           title="Touch 'Component Library' to close"
         >
           <h3 className="panel-title">Component Library</h3>
-          <span className="panel-free-badge">100% Free</span>
+          <span className="panel-free-badge">EDA Catalog</span>
         </div>
         <div className="view-mode-toggle" style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
           <button
@@ -78,12 +78,46 @@ export default function ComponentPanel() {
         </div>
       </div>
 
-      {/* Search Input with Pictures Indicator */}
+      {/* Quick-Access Common Parts Shelf */}
+      <div className="common-shelf-section">
+        <div className="common-shelf-header">
+          <span className="common-shelf-title">
+            <Zap size={11} className="shelf-zap-icon" /> Common Parts Shelf
+          </span>
+          <span className="common-shelf-hint">Drag &amp; drop</span>
+        </div>
+        <div className="common-shelf-scroll">
+          {COMMON_PARTS.map(part => {
+            const compDef = COMPONENTS.find(c => c.id === part.id);
+            if (!compDef) return null;
+            return (
+              <div
+                key={part.id}
+                className="common-shelf-chip"
+                draggable
+                onDragStart={e => handleDragStart(e, compDef)}
+                onClick={() => handleAddToCanvas(compDef)}
+                title={`Drag ${compDef.name} onto canvas, or click to place`}
+              >
+                <div className="common-chip-preview">
+                  <ComponentIllustration componentId={compDef.id} width={34} height={24} />
+                </div>
+                <div className="common-chip-info">
+                  <span className="common-chip-label">{part.label}</span>
+                  <span className="common-chip-desc">{part.desc}</span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Search Input */}
       <div className="search-wrapper">
         <Search size={14} className="search-icon" />
         <input
           className="search-input"
-          placeholder="Search by name, pin, specs..."
+          placeholder="Search by name, package, pin..."
           value={searchQuery}
           onChange={e => setSearchQuery(e.target.value)}
         />
@@ -96,7 +130,7 @@ export default function ComponentPanel() {
 
       {/* Visual Subtitle indicator */}
       <div className="search-subtitle">
-        <span>{filtered.length} components with visual illustrations</span>
+        <span>{filtered.length} components with package previews</span>
       </div>
 
       {/* Category Filter Pills */}
@@ -240,20 +274,19 @@ function ComponentCard({ comp, viewMode, onDragStart, onAdd, onInspect }) {
           <div className="comp-card-grid-title" title={comp.name}>
             {comp.name}
           </div>
+          
+          {/* Package and pin count metadata */}
+          <div className="comp-card-meta-line">
+            {comp.packageType && <span className="comp-meta-pkg">{comp.packageType}</span>}
+            {comp.packageType && (comp.pinCount || comp.pins) && <span className="meta-sep">·</span>}
+            <span className="comp-meta-pins">
+              {comp.pinCount ? `${comp.pinCount} pins` : comp.pins ? `${Object.values(comp.pins).flat().length} pins` : ''}
+            </span>
+          </div>
+
           <div className="comp-card-grid-desc" title={comp.description}>
             {comp.description}
           </div>
-
-          {/* Quick Specs Badges */}
-          {comp.specs && (
-            <div className="comp-card-specs">
-              {Object.entries(comp.specs).slice(0, 2).map(([k, v]) => (
-                <span key={k} className="spec-badge">
-                  {typeof v === 'boolean' ? k : `${v}`}
-                </span>
-              ))}
-            </div>
-          )}
 
           {/* Action Row */}
           <div className="comp-card-action-row">
@@ -263,7 +296,7 @@ function ComponentCard({ comp, viewMode, onDragStart, onAdd, onInspect }) {
             <button
               className="comp-grid-add-btn"
               onClick={(e) => { e.stopPropagation(); onAdd(comp); }}
-              title="Add component to canvas"
+              title="Add component to canvas (or drag & drop)"
             >
               <Plus size={13} />
               <span>Add</span>
@@ -282,6 +315,7 @@ function ComponentCard({ comp, viewMode, onDragStart, onAdd, onInspect }) {
       onDragStart={e => onDragStart(e, comp)}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      title="Drag onto canvas or click to add"
     >
       {/* Visual Component Thumbnail */}
       <div
@@ -302,8 +336,13 @@ function ComponentCard({ comp, viewMode, onDragStart, onAdd, onInspect }) {
 
       {/* Info */}
       <div className="comp-info" onClick={() => onInspect(comp)}>
-        <div className="comp-name">{comp.name}</div>
-        <div className="comp-desc">{comp.description}</div>
+        <div className="comp-name-row">
+          <span className="comp-name">{comp.name}</span>
+          {comp.packageType && <span className="comp-pkg-badge">{comp.packageType}</span>}
+        </div>
+        <div className="comp-desc">
+          {comp.pinCount ? `${comp.pinCount} pins · ` : ''}{comp.description}
+        </div>
       </div>
 
       {/* Add button */}

@@ -164,12 +164,16 @@
   font-family: 'Inter', sans-serif;
 }
 
-.cat-filter-pill:hover { background: rgba(255,255,255,0.05); }
+.cat-filter-pill:hover {
+  background: var(--bg-card-hover);
+  color: var(--text-primary);
+  border-color: var(--border-primary);
+}
 
 .cat-filter-pill.active {
-  background: rgba(99,102,241,0.15);
-  border-color: rgba(99,102,241,0.4);
-  color: var(--text-accent);
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: #ffffff;
 }
 
 /* Stats row */
@@ -275,10 +279,12 @@
 .cc-category {
   margin-left: auto;
   padding: 2px 8px;
-  background: rgba(255,255,255,0.05);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-secondary);
   border-radius: 99px;
   font-size: 10px;
   font-weight: 600;
+  color: var(--text-secondary);
 }
 
 .cc-actions {

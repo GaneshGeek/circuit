@@ -5,11 +5,12 @@ import {
   Wifi, WifiOff, Usb, RefreshCw, X, Send, Settings,
   CheckCircle, XCircle, AlertCircle, Loader, Info
 } from 'lucide-react';
+import { toast } from 'react-hot-toast';
 import { useCircuitStore, useAppStore } from '../../store/store';
 import './CodePanel.css';
 
 export default function CodePanel() {
-  const { rightPanelTab, setRightPanelTab, toggleCodePanel } = useAppStore();
+  const { rightPanelTab, setRightPanelTab, toggleCodePanel, theme } = useAppStore();
   const {
     firmwareCode, setFirmwareCode, compileStatus, compileOutput, compileErrors, setCompileStatus,
     serialPort, setSerialPort, serialConnected, setSerialConnected,
@@ -55,7 +56,7 @@ export default function CodePanel() {
   // --- Web Serial API ---
   const handleRequestPort = async () => {
     if (!navigator.serial) {
-      alert('Web Serial API not supported. Use Chrome/Edge browser.');
+      toast.error('Web Serial API not supported. Use Chrome or Edge browser.');
       return;
     }
     try {
@@ -196,7 +197,7 @@ export default function CodePanel() {
           <Editor
             height="100%"
             defaultLanguage="cpp"
-            theme="vs-dark"
+            theme={theme === 'light' ? 'vs' : 'vs-dark'}
             value={firmwareCode}
             onChange={v => setFirmwareCode(v || '')}
             options={{

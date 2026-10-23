@@ -1,10 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, Sparkles, Zap, Trash2, Copy, ChevronDown, Mic, MicOff, Settings, X } from 'lucide-react';
+import { Send, Zap, Trash2, Mic, MicOff, X } from 'lucide-react';
 import { useAppStore, useCircuitStore } from '../../store/store';
 import { COMPONENTS } from '../../data/components';
 import './AICopilot.css';
-
-const GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
 
 function buildSystemPrompt(components, wires, projectName) {
   return `You are VoltCraft AI, an expert electronics design assistant embedded in the VoltCraft cloud EDA platform. You help users design circuits, write Arduino/ESP32/RP2040 firmware, debug issues, explain components, and auto-generate wiring plans.
@@ -28,29 +26,20 @@ When writing code, always use markdown code blocks with the language.
 Be concise, technical, and practical.`;
 }
 
-async function callGemini(messages, apiKey, systemPrompt) {
-  const contents = [
-    { role: 'user', parts: [{ text: systemPrompt }] },
-    { role: 'model', parts: [{ text: 'Understood. I am VoltCraft AI, ready to help you design circuits and write firmware.' }] },
-    ...messages.filter(m => m.role !== 'system').map(m => ({
-      role: m.role === 'assistant' ? 'model' : 'user',
-      parts: [{ text: m.content }],
-    })),
-  ];
-
-  const res = await fetch(`${GEMINI_URL}?key=${apiKey}`, {
+async function callGemini(messages, systemPrompt) {
+  const res = await fetch('/api/copilot', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ contents, generationConfig: { temperature: 0.7, maxOutputTokens: 2048 } }),
+    body: JSON.stringify({ messages, systemPrompt }),
   });
 
   if (!res.ok) {
-    const err = await res.json();
-    throw new Error(err.error?.message || 'API error');
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.error || `Server responded with ${res.status}`);
   }
 
   const data = await res.json();
-  return data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response.';
+  return data.reply || 'No response.';
 }
 
 function MarkdownMessage({ content }) {
@@ -71,13 +60,11 @@ function MarkdownMessage({ content }) {
 
 export default function AICopilot() {
   const {
-    aiMessages, aiLoading, aiApiKey, appendAiMessage, setAiLoading, setAiApiKey, clearAiMessages,
+    aiMessages, aiLoading, appendAiMessage, setAiLoading, clearAiMessages,
     toggleAiPanel
   } = useAppStore();
   const { components, wires, projectName, setFirmwareCode } = useCircuitStore();
   const [input, setInput] = useState('');
-  const [showSettings, setShowSettings] = useState(!aiApiKey);
-  const [keyInput, setKeyInput] = useState(aiApiKey);
   const [isListening, setIsListening] = useState(false);
   const messagesEndRef = useRef(null);
   const recognitionRef = useRef(null);
@@ -116,7 +103,6 @@ export default function AICopilot() {
 
   const sendMessage = async () => {
     if (!input.trim() || aiLoading) return;
-    if (!aiApiKey) { setShowSettings(true); return; }
 
     const userMsg = { role: 'user', content: input.trim(), ts: Date.now() };
     appendAiMessage(userMsg);
@@ -126,7 +112,7 @@ export default function AICopilot() {
     try {
       const systemPrompt = buildSystemPrompt(components, wires, projectName);
       const allMessages = [...aiMessages, userMsg];
-      const reply = await callGemini(allMessages, aiApiKey, systemPrompt);
+      const reply = await callGemini(allMessages, systemPrompt);
 
       // Extract code blocks to offer adding to editor
       const codeMatch = reply.match(/```(?:cpp|arduino|c\+\+)?\n?([\s\S]*?)```/);
@@ -142,7 +128,7 @@ export default function AICopilot() {
     } catch (err) {
       appendAiMessage({
         role: 'assistant',
-        content: `❌ **Error**: ${err.message}\n\nPlease check your Gemini API key in settings.`,
+        content: `❌ **Error**: ${err.message}`,
         ts: Date.now(),
       });
     } finally {
@@ -174,9 +160,6 @@ export default function AICopilot() {
         </button>
 
         <div className="code-toolbar-right" style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-          <button className="btn-icon" onClick={() => setShowSettings(!showSettings)} title="API Key Settings">
-            <Settings size={13} />
-          </button>
           <button className="btn-icon" onClick={clearAiMessages} title="Clear chat">
             <Trash2 size={13} />
           </button>
@@ -190,32 +173,6 @@ export default function AICopilot() {
           </button>
         </div>
       </div>
-
-      {/* API Key Settings */}
-      {showSettings && (
-        <div className="ai-settings">
-          <p style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 8 }}>
-            Enter your <strong style={{ color: 'var(--text-secondary)' }}>Google Gemini API key</strong> to activate AI features. Free to get at <a href="https://aistudio.google.com" target="_blank" style={{ color: 'var(--accent-cyan)' }}>aistudio.google.com</a>
-          </p>
-          <div style={{ display: 'flex', gap: 6 }}>
-            <input
-              className="input"
-              type="password"
-              placeholder="AIzaSy..."
-              value={keyInput}
-              onChange={e => setKeyInput(e.target.value)}
-              style={{ fontSize: 13 }}
-            />
-            <button
-              className="btn-primary"
-              style={{ padding: '8px 14px', flexShrink: 0 }}
-              onClick={() => { setAiApiKey(keyInput); setShowSettings(false); }}
-            >
-              Save
-            </button>
-          </div>
-        </div>
-      )}
 
       {/* Messages */}
       <div className="ai-messages">

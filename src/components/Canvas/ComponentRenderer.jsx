@@ -1,5 +1,5 @@
 import React from 'react';
-import { useCircuitStore } from '../../store/store';
+import { useCircuitStore, useAppStore } from '../../store/store';
 import ComponentIllustration from '../Common/ComponentImage';
 import { getComponentPinPosition, getCompBaseType } from '../../utils/circuitEngine';
 
@@ -7,6 +7,7 @@ export default function ComponentRenderer({
   component, isSelected, isSimulating, onMouseDown, onPinClick, wireMode, wireStart, onClick
 }) {
   const { pinStates, mcuOutputs, setSensorValue } = useCircuitStore();
+  const { theme } = useAppStore();
   const { id, defId, x, y, width, height, color, accentColor, symbol, label, pins, rotation } = component;
 
   const baseType = getCompBaseType(component);
@@ -51,14 +52,18 @@ export default function ComponentRenderer({
         style={{
           width: '100%',
           height: '100%',
-          background: `radial-gradient(circle at 50% 50%, ${color}22, rgba(15, 23, 42, 0.92))`,
-          border: `1.5px solid ${isSelected ? accentColor : color}88`,
+          background: theme === 'light'
+            ? `radial-gradient(circle at 50% 50%, ${color}12, #ffffff)`
+            : `radial-gradient(circle at 50% 50%, ${color}22, rgba(15, 23, 42, 0.94))`,
+          border: `1.5px solid ${isSelected ? accentColor : theme === 'light' ? '#cbd5e1' : color + '88'}`,
           borderRadius: '8px',
           boxShadow: isSelected
-            ? `0 0 0 2px ${accentColor}88, 0 4px 20px ${color}55`
+            ? `0 0 0 2px ${accentColor}88, 0 4px 16px ${color}33`
             : isLedOn
             ? `0 0 25px ${color || '#ef4444'}, 0 0 10px #ffffff`
-            : `0 2px 8px rgba(0,0,0,0.4)`,
+            : theme === 'light'
+            ? '0 1px 4px rgba(0,0,0,0.06)'
+            : '0 2px 8px rgba(0,0,0,0.4)',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -88,6 +93,7 @@ export default function ComponentRenderer({
             componentId={compDefId}
             width={Math.max(26, width - 8)}
             height={Math.max(20, height - 16)}
+            properties={component.properties}
           />
 
           {/* Interactive Servo Motor rotating horn in simulation */}
@@ -182,17 +188,18 @@ export default function ComponentRenderer({
             bottom: 2,
             left: '50%',
             transform: 'translateX(-50%)',
-            background: 'rgba(15, 23, 42, 0.85)',
-            border: `1px solid ${accentColor}44`,
+            background: theme === 'light' ? '#ffffff' : 'rgba(15, 23, 42, 0.85)',
+            border: `1px solid ${theme === 'light' ? '#e2e8f0' : accentColor + '44'}`,
             borderRadius: 3,
             padding: '1px 5px',
-            color: '#e2e8f0',
+            color: theme === 'light' ? '#0f172a' : '#e2e8f0',
             fontSize: 8.5,
             fontWeight: 700,
             fontFamily: 'JetBrains Mono, monospace',
             whiteSpace: 'nowrap',
             pointerEvents: 'none',
             zIndex: 3,
+            boxShadow: theme === 'light' ? '0 1px 2px rgba(0,0,0,0.06)' : 'none',
           }}
         >
           {label || symbol}

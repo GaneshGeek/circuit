@@ -20,7 +20,7 @@ export default function CircuitCanvas({ onComponentClick }) {
     startSimulation, stopSimulation, autoWireAndGenerate, setAutoSync
   } = useCircuitStore();
 
-  const { quickBuilderOpen, setQuickBuilderOpen } = useAppStore();
+  const { quickBuilderOpen, setQuickBuilderOpen, theme } = useAppStore();
 
   const canvasRef = useRef(null);
   const [isPanning, setIsPanning] = useState(false);
@@ -250,11 +250,12 @@ export default function CircuitCanvas({ onComponentClick }) {
             <svg className="canvas-grid" width="100%" height="100%">
               <defs>
                 <pattern id="smallGrid" width={gridSize} height={gridSize} patternUnits="userSpaceOnUse">
-                  <path d={`M ${gridSize} 0 L 0 0 0 ${gridSize}`} fill="none" stroke="rgba(99,102,241,0.08)" strokeWidth="0.5" />
+                  <circle cx={gridSize / 2} cy={gridSize / 2} r="0.75" fill={theme === 'light' ? '#94a3b8' : 'rgba(99,102,241,0.3)'} opacity={theme === 'light' ? 0.7 : 1} />
+                  <path d={`M ${gridSize} 0 L 0 0 0 ${gridSize}`} fill="none" stroke={theme === 'light' ? 'rgba(203,213,225,0.45)' : 'rgba(99,102,241,0.08)'} strokeWidth="0.5" />
                 </pattern>
                 <pattern id="bigGrid" width={gridSize * 5} height={gridSize * 5} patternUnits="userSpaceOnUse">
                   <rect width={gridSize * 5} height={gridSize * 5} fill="url(#smallGrid)" />
-                  <path d={`M ${gridSize * 5} 0 L 0 0 0 ${gridSize * 5}`} fill="none" stroke="rgba(99,102,241,0.15)" strokeWidth="1" />
+                  <path d={`M ${gridSize * 5} 0 L 0 0 0 ${gridSize * 5}`} fill="none" stroke={theme === 'light' ? 'rgba(148,163,184,0.35)' : 'rgba(99,102,241,0.18)'} strokeWidth="1" />
                 </pattern>
               </defs>
               <rect width="9999" height="9999" x="-4999" y="-4999" fill="url(#bigGrid)" />

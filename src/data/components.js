@@ -101,6 +101,42 @@ export const COMPONENTS = [
     pins: { digital: Array.from({length:32}, (_,i)=>`P${i}`), power: ['3.3V','GND','VCC'] },
     specs: { voltage: '3.3V', flash: '64KB', sram: '20KB', clock: '72MHz' }
   },
+  {
+    id: 'esp8266-nodemcu',
+    name: 'NodeMCU ESP8266',
+    category: 'microcontrollers',
+    description: 'Wi-Fi enabled IoT board, 80MHz Tensilica L106, 4MB Flash, CP2102 USB',
+    tags: ['esp8266', 'nodemcu', 'wifi', 'iot', 'espressif', 'microcontroller'],
+    color: '#0f766e',
+    accentColor: '#14b8a6',
+    symbol: 'NODEMCU',
+    width: 80,
+    height: 110,
+    pins: {
+      digital: ['D0','D1','D2','D3','D4','D5','D6','D7','D8'],
+      analog: ['A0'],
+      power: ['3.3V','GND','VIN','RST'],
+      special: ['TX','RX','D9/RX','D10/TX']
+    },
+    specs: { voltage: '3.3V', flash: '4MB', sram: '80KB', clock: '80MHz', wifi: '802.11 b/g/n' }
+  },
+  {
+    id: 'attiny85',
+    name: 'ATtiny85 DIP-8',
+    category: 'microcontrollers',
+    description: 'Ultra-compact 8-bit AVR microcontroller with 8KB flash in breadboard-friendly DIP-8',
+    tags: ['attiny85', 'avr', 'tiny', 'dip8', 'atmel', 'microcontroller'],
+    color: '#312e81',
+    accentColor: '#6366f1',
+    symbol: 'ATTINY',
+    width: 60,
+    height: 65,
+    pins: {
+      digital: ['PB0','PB1','PB2','PB3','PB4','PB5/RST'],
+      power: ['VCC','GND']
+    },
+    specs: { voltage: '2.7-5.5V', flash: '8KB', sram: '512B', clock: '20MHz' }
+  },
 
   // Sensors
   {
@@ -215,6 +251,104 @@ export const COMPONENTS = [
     pins: { signal: ['A','B'] },
     specs: { resistance: '10Ω-1MΩ', response: 'Analog' }
   },
+  {
+    id: 'bme280',
+    name: 'BME280 Environmental',
+    category: 'sensors',
+    description: 'Precision temperature, humidity & barometric pressure sensor via I2C/SPI',
+    tags: ['bme280', 'temperature', 'humidity', 'pressure', 'i2c', 'spi', 'weather', 'bosch'],
+    color: '#0891b2',
+    accentColor: '#06b6d4',
+    symbol: 'BME280',
+    width: 55,
+    height: 45,
+    pins: { signal: ['SDA','SCL','SDO','CSB'], power: ['VCC','GND'] },
+    specs: { temp: '-40 to 85°C', humidity: '0-100% RH', pressure: '300-1100hPa', accuracy: '±0.5°C' }
+  },
+  {
+    id: 'vl53l0x',
+    name: 'VL53L0X Laser ToF',
+    category: 'sensors',
+    description: 'Time-of-Flight distance sensor using 940nm VCSEL laser, up to 2m range',
+    tags: ['vl53l0x', 'laser', 'tof', 'distance', 'ranging', 'i2c', 'proximity'],
+    color: '#4338ca',
+    accentColor: '#6366f1',
+    symbol: 'TOF',
+    width: 55,
+    height: 45,
+    pins: { signal: ['SDA','SCL','XSHUT','GPIO1'], power: ['VIN','GND'] },
+    specs: { range: '50-2000mm', wavelength: '940nm', interface: 'I2C', precision: '±3%' }
+  },
+  {
+    id: 'mq2-gas',
+    name: 'MQ-2 Gas & Smoke',
+    category: 'sensors',
+    description: 'Metal oxide sensor for LPG, smoke, methane, butane, alcohol, and hydrogen',
+    tags: ['mq2', 'gas', 'smoke', 'lpg', 'methane', 'air quality', 'analog'],
+    color: '#b45309',
+    accentColor: '#f59e0b',
+    symbol: 'MQ-2',
+    width: 55,
+    height: 60,
+    pins: { signal: ['AOUT','DOUT'], power: ['VCC','GND'] },
+    specs: { detects: 'LPG, Smoke, Alcohol', output: 'Analog + Digital', voltage: '5V' }
+  },
+  {
+    id: 'ds18b20',
+    name: 'DS18B20 Temp Probe',
+    category: 'sensors',
+    description: '1-Wire digital thermometer probe with stainless steel waterproof casing',
+    tags: ['ds18b20', 'temperature', 'waterproof', '1-wire', 'probe', 'dallas', 'maxim'],
+    color: '#0284c7',
+    accentColor: '#38bdf8',
+    symbol: '1WIRE',
+    width: 65,
+    height: 45,
+    pins: { signal: ['DATA'], power: ['VCC','GND'] },
+    specs: { range: '-55 to +125°C', resolution: '9-12 bit', interface: '1-Wire', accuracy: '±0.5°C' }
+  },
+  {
+    id: 'hx711',
+    name: 'HX711 Load Cell Amp',
+    category: 'sensors',
+    description: '24-bit precision analog-to-digital converter designed for weigh scales and strain gauges',
+    tags: ['hx711', 'load cell', 'weight', 'scale', 'strain gauge', '24-bit', 'adc'],
+    color: '#047857',
+    accentColor: '#10b981',
+    symbol: 'HX711',
+    width: 65,
+    height: 50,
+    pins: { signal: ['DT','SCK'], power: ['VCC','GND'], input: ['E+','E-','A+','A-'] },
+    specs: { adc: '24-bit', gain: '64/128', dataRate: '10/80 SPS', voltage: '2.6-5.5V' }
+  },
+  {
+    id: 'rc522-rfid',
+    name: 'RC522 RFID Reader',
+    category: 'sensors',
+    description: '13.56MHz contactless RFID/NFC reader module with SPI interface',
+    tags: ['rc522', 'rfid', 'nfc', 'contactless', 'card', 'spi', 'mifare'],
+    color: '#1d4ed8',
+    accentColor: '#3b82f6',
+    symbol: 'RFID',
+    width: 65,
+    height: 70,
+    pins: { signal: ['SDA','SCK','MOSI','MISO','IRQ','RST'], power: ['3.3V','GND'] },
+    specs: { frequency: '13.56MHz', protocol: 'ISO 14443A / MIFARE', interface: 'SPI' }
+  },
+  {
+    id: 'joystick-module',
+    name: 'Dual-Axis Joystick',
+    category: 'sensors',
+    description: 'Thumb analog joystick with dual potentiometers (X, Y) and tactile push button (SW)',
+    tags: ['joystick', 'analog', 'controller', 'ky-023', 'thumbstick', 'input'],
+    color: '#475569',
+    accentColor: '#94a3b8',
+    symbol: 'JOY',
+    width: 60,
+    height: 60,
+    pins: { signal: ['VRx','VRy','SW'], power: ['VCC','GND'] },
+    specs: { axes: 'X, Y Analog', button: 'Push Tactile', voltage: '3.3V-5V' }
+  },
 
   // Actuators
   {
@@ -287,6 +421,48 @@ export const COMPONENTS = [
     pins: { signal: ['IN1','IN2','IN3','IN4'], power: ['5V','GND'] },
     specs: { steps: '64×64', voltage: '5V', angle: '5.625°/step' }
   },
+  {
+    id: 'neopixel-ring',
+    name: 'WS2812B NeoPixel Ring',
+    category: 'actuators',
+    description: 'Circular array of 16 individually addressable 5050 RGB LEDs with single-wire control',
+    tags: ['neopixel', 'ws2812b', 'rgb', 'led ring', 'addressable', 'adafruit', 'lighting'],
+    color: '#059669',
+    accentColor: '#10b981',
+    symbol: 'PIXEL',
+    width: 75,
+    height: 75,
+    pins: { signal: ['DI','DO'], power: ['5V','GND'] },
+    specs: { leds: 16, protocol: 'NZR 800kHz', colorDepth: '24-bit (16.7M colors)' }
+  },
+  {
+    id: 'solenoid-valve',
+    name: '12V Solenoid Valve',
+    category: 'actuators',
+    description: 'Normally-closed electromagnetic liquid/air control valve (1/2" NPT)',
+    tags: ['solenoid', 'valve', '12v', 'fluid', 'pneumatic', 'water', 'automation'],
+    color: '#334155',
+    accentColor: '#64748b',
+    symbol: 'VALVE',
+    width: 65,
+    height: 60,
+    pins: { power: ['12V','GND'] },
+    specs: { voltage: '12V DC', current: '300mA', pressure: '0.02-0.8MPa', type: 'NC' }
+  },
+  {
+    id: 'vibration-motor',
+    name: 'Mini Vibration Motor',
+    category: 'actuators',
+    description: 'Coin-type eccentric rotating mass (ERM) haptic feedback vibration motor',
+    tags: ['vibration', 'haptic', 'motor', 'erm', 'disc', 'pager', 'feedback'],
+    color: '#64748b',
+    accentColor: '#94a3b8',
+    symbol: 'HAPTIC',
+    width: 45,
+    height: 45,
+    pins: { power: ['VCC','GND'] },
+    specs: { voltage: '3V DC', rpm: '12000 RPM', current: '70mA' }
+  },
 
   // Displays
   {
@@ -345,61 +521,145 @@ export const COMPONENTS = [
     pins: { signal: ['MOSI','MISO','SCK','CS','DC','RST'], power: ['VCC','GND'] },
     specs: { resolution: '320×240', interface: 'SPI', colors: '65K' }
   },
+  {
+    id: 'tm1637-display',
+    name: 'TM1637 4-Digit Display',
+    category: 'displays',
+    description: '4-digit 0.36" 7-segment LED clock module with middle colon, 2-wire serial interface',
+    tags: ['tm1637', '7segment', 'display', 'clock', '4digit', 'timer', 'led'],
+    color: '#991b1b',
+    accentColor: '#ef4444',
+    symbol: 'TM1637',
+    width: 80,
+    height: 45,
+    pins: { signal: ['CLK','DIO'], power: ['VCC','GND'] },
+    specs: { digits: 4, interface: '2-Wire Serial', color: 'Red LED', colon: true }
+  },
+  {
+    id: 'max7219-matrix',
+    name: 'MAX7219 8×8 Matrix',
+    category: 'displays',
+    description: 'Red 64-LED dot matrix display with MAX7219 serially interfaced driver IC, SPI cascadable',
+    tags: ['max7219', 'matrix', 'led matrix', '8x8', 'spi', 'dot matrix'],
+    color: '#831843',
+    accentColor: '#ec4899',
+    symbol: 'MATRIX',
+    width: 65,
+    height: 65,
+    pins: { signal: ['DIN','CS','CLK','DOUT'], power: ['VCC','GND'] },
+    specs: { matrix: '8×8 (64 LEDs)', interface: 'SPI 10MHz', cascadable: true }
+  },
 
   // Passive Components
   {
     id: 'resistor',
     name: 'Resistor',
     category: 'passive',
-    description: 'Fixed value resistor, standard axial through-hole',
-    tags: ['resistor', 'passive', 'ohm', 'current limiting'],
+    packageType: 'Axial 1/4W',
+    pinCount: 2,
+    description: 'Fixed value axial resistor, color-coded through-hole',
+    tags: ['resistor', 'passive', 'ohm', 'current limiting', 'axial'],
     color: '#8d6e63',
     accentColor: '#a1887f',
     symbol: 'R',
-    width: 50,
-    height: 20,
+    width: 60,
+    height: 25,
     pins: { signal: ['A','B'] },
     properties: { resistance: 1000, tolerance: 5, power: 0.25 }
   },
   {
     id: 'led',
-    name: 'LED',
+    name: 'LED (5mm)',
     category: 'passive',
-    description: 'Light emitting diode, available in multiple colors',
+    packageType: 'Radial 5mm',
+    pinCount: 2,
+    description: 'Light emitting diode with flanged epoxy dome, polarity marked',
     tags: ['led', 'light', 'diode', 'indicator', 'output'],
     color: '#f57f17',
     accentColor: '#ffca28',
     symbol: 'LED',
-    width: 30,
-    height: 40,
+    width: 35,
+    height: 45,
     pins: { signal: ['A','K'] },
     properties: { color: 'red', voltage: 2.0, current: 20 }
   },
   {
     id: 'capacitor',
-    name: 'Capacitor',
+    name: 'Electrolytic Cap',
     category: 'passive',
-    description: 'Electrolytic capacitor for filtering and energy storage',
-    tags: ['capacitor', 'electrolytic', 'filter', 'passive', 'farad'],
+    packageType: 'Radial Can',
+    pinCount: 2,
+    description: 'Polarized aluminum electrolytic capacitor for filtering and bulk storage',
+    tags: ['capacitor', 'electrolytic', 'filter', 'passive', 'farad', 'polarized'],
     color: '#455a64',
     accentColor: '#78909c',
     symbol: 'C',
-    width: 30,
-    height: 45,
+    width: 35,
+    height: 50,
     pins: { signal: ['+','-'] },
     properties: { capacitance: 100, voltage: 25, type: 'electrolytic' }
+  },
+  {
+    id: 'ceramic-capacitor',
+    name: 'Ceramic Capacitor',
+    category: 'passive',
+    packageType: 'Disc Ceramic',
+    pinCount: 2,
+    description: 'Non-polarized ceramic disc capacitor (100nF / 0.1µF) for high-frequency decoupling',
+    tags: ['capacitor', 'ceramic', 'decoupling', '100nf', '0.1uf', 'disc', 'filter'],
+    color: '#d97706',
+    accentColor: '#f59e0b',
+    symbol: 'CC',
+    width: 35,
+    height: 45,
+    pins: { signal: ['1','2'] },
+    properties: { capacitance: 100, unit: 'nF', code: '104', voltage: 50, type: 'ceramic' }
+  },
+  {
+    id: 'diode-1n4007',
+    name: '1N4007 Diode',
+    category: 'passive',
+    packageType: 'DO-41 Axial',
+    pinCount: 2,
+    description: '1A 1000V general purpose silicon rectifier diode with cathode stripe',
+    tags: ['diode', '1n4007', 'rectifier', 'flyback', 'protection', 'semiconductor'],
+    color: '#1e293b',
+    accentColor: '#94a3b8',
+    symbol: 'D',
+    width: 55,
+    height: 25,
+    pins: { signal: ['A','K'] },
+    properties: { current: '1A', maxVoltage: '1000V', vf: '0.7V' }
+  },
+  {
+    id: 'transistor-2n2222',
+    name: '2N2222 NPN Transistor',
+    category: 'passive',
+    packageType: 'TO-92',
+    pinCount: 3,
+    description: 'General purpose NPN bipolar junction transistor for switching and amplification',
+    tags: ['transistor', 'npn', '2n2222', 'to92', 'bjt', 'switch', 'amplifier'],
+    color: '#334155',
+    accentColor: '#64748b',
+    symbol: 'Q',
+    width: 45,
+    height: 45,
+    pins: { signal: ['E','B','C'] },
+    properties: { type: 'NPN', vce: '40V', ic: '800mA', hfe: '100-300' }
   },
   {
     id: 'push-button',
     name: 'Push Button',
     category: 'passive',
-    description: 'Momentary tactile push button switch, 6mm',
+    packageType: 'Tactile 6x6mm',
+    pinCount: 4,
+    description: 'Momentary tactile push button switch, 6mm square with 4 leads',
     tags: ['button', 'switch', 'push', 'momentary', 'tactile'],
     color: '#546e7a',
     accentColor: '#78909c',
     symbol: 'BTN',
-    width: 30,
-    height: 30,
+    width: 35,
+    height: 35,
     pins: { signal: ['1','2','3','4'] },
     properties: { type: 'momentary', rating: '50mA 12V' }
   },
@@ -407,15 +667,81 @@ export const COMPONENTS = [
     id: 'potentiometer',
     name: 'Potentiometer',
     category: 'passive',
-    description: 'Variable resistor with wiper output for analog control',
+    packageType: 'Rotary 9mm',
+    pinCount: 3,
+    description: 'Variable rotary resistor with wiper output for analog control',
     tags: ['potentiometer', 'variable resistor', 'pot', 'analog', 'knob'],
     color: '#4e342e',
     accentColor: '#6d4c41',
     symbol: 'POT',
-    width: 45,
-    height: 45,
+    width: 50,
+    height: 50,
     pins: { signal: ['A','W','B'] },
     properties: { resistance: 10000, type: 'linear' }
+  },
+  {
+    id: 'rgb-led',
+    name: 'RGB LED (5mm)',
+    category: 'passive',
+    packageType: 'Radial 5mm 4-Pin',
+    pinCount: 4,
+    description: 'Diffused 5mm 4-pin RGB LED with common cathode for full-spectrum color mixing',
+    tags: ['rgb', 'led', 'multicolor', 'common cathode', 'tri-color', 'light'],
+    color: '#7c3aed',
+    accentColor: '#a78bfa',
+    symbol: 'RGB',
+    width: 45,
+    height: 50,
+    pins: { signal: ['R','G','B'], power: ['GND'] },
+    properties: { type: 'Common Cathode', vf_red: 2.0, vf_green: 3.2, vf_blue: 3.2 }
+  },
+  {
+    id: 'mosfet-irf520',
+    name: 'IRF520 N-MOSFET',
+    category: 'passive',
+    packageType: 'TO-220',
+    pinCount: 3,
+    description: 'N-Channel 100V 9.2A power MOSFET for high-current DC loads and motor PWM',
+    tags: ['mosfet', 'irf520', 'transistor', 'to220', 'n-channel', 'high current', 'switch'],
+    color: '#1e293b',
+    accentColor: '#64748b',
+    symbol: 'FET',
+    width: 45,
+    height: 55,
+    pins: { signal: ['G','D','S'] },
+    properties: { vds: '100V', id: '9.2A', rdsOn: '0.27Ω' }
+  },
+  {
+    id: 'slide-switch',
+    name: 'Slide Switch (SPDT)',
+    category: 'passive',
+    packageType: 'Through-Hole',
+    pinCount: 3,
+    description: 'Miniature single-pole double-throw slide switch for power on/off and signal routing',
+    tags: ['switch', 'slide', 'spdt', 'power switch', 'toggle'],
+    color: '#475569',
+    accentColor: '#64748b',
+    symbol: 'SW',
+    width: 45,
+    height: 35,
+    pins: { signal: ['1','COM','2'] },
+    properties: { rating: '0.3A 50V DC', positions: 2 }
+  },
+  {
+    id: 'inductor-axial',
+    name: 'Axial Inductor',
+    category: 'passive',
+    packageType: 'Axial Choke',
+    pinCount: 2,
+    description: 'Color-coded axial lead power choke inductor for LC filtering and EMI suppression',
+    tags: ['inductor', 'choke', 'coil', '100uh', 'filter', 'passive'],
+    color: '#065f46',
+    accentColor: '#10b981',
+    symbol: 'L',
+    width: 60,
+    height: 25,
+    pins: { signal: ['1','2'] },
+    properties: { inductance: 100, unit: 'µH', current: '500mA' }
   },
 
   // Communication
@@ -461,6 +787,34 @@ export const COMPONENTS = [
     pins: { signal: ['TX','RX','RST'], power: ['VCC','GND'] },
     specs: { bands: 'GSM 850/900/1800/1900', voltage: '3.7-4.2V' }
   },
+  {
+    id: 'lora-sx1278',
+    name: 'LoRa SX1278 Ra-02',
+    category: 'communication',
+    description: 'Long-range spread-spectrum RF transceiver module, SPI interface, 433MHz, up to 10km line-of-sight',
+    tags: ['lora', 'sx1278', 'ra02', '433mhz', 'long range', 'wireless', 'spi', 'semtech'],
+    color: '#064e3b',
+    accentColor: '#10b981',
+    symbol: 'LORA',
+    width: 65,
+    height: 60,
+    pins: { signal: ['MOSI','MISO','SCK','NSS','RST','DIO0','DIO1'], power: ['3.3V','GND'] },
+    specs: { frequency: '433MHz', sensitivity: '-148dBm', maxPower: '+20dBm', interface: 'SPI' }
+  },
+  {
+    id: 'esp-01',
+    name: 'ESP-01 WiFi Module',
+    category: 'communication',
+    description: 'Ultra-compact 8-pin ESP8266 serial WiFi module with integrated PCB antenna',
+    tags: ['esp01', 'esp8266', 'wifi', 'serial', 'uart', 'compact'],
+    color: '#0369a1',
+    accentColor: '#38bdf8',
+    symbol: 'ESP01',
+    width: 55,
+    height: 50,
+    pins: { signal: ['TX','RX','GPIO0','GPIO2','CH_PD','RST'], power: ['3.3V','GND'] },
+    specs: { voltage: '3.3V', protocol: '802.11 b/g/n', interface: 'UART' }
+  },
 
   // Power
   {
@@ -505,14 +859,60 @@ export const COMPONENTS = [
     pins: { signal: ['VCC','GND'] },
     properties: { voltage: 5, adjustable: true }
   },
+  {
+    id: 'tp4056-charger',
+    name: 'TP4056 Li-Ion Charger',
+    category: 'power',
+    description: '1A Lithium battery charging module with USB-C input and DW01A battery protection IC',
+    tags: ['tp4056', 'charger', 'lipo', '18650', 'usb-c', 'battery charging', 'protection'],
+    color: '#0284c7',
+    accentColor: '#38bdf8',
+    symbol: 'TP4056',
+    width: 65,
+    height: 50,
+    pins: { power: ['IN+','IN-','BAT+','BAT-','OUT+','OUT-'] },
+    specs: { chargeCurrent: '1A', chargeVoltage: '4.2V', input: '4.5-5.5V USB-C' }
+  },
+  {
+    id: 'buck-converter-lm2596',
+    name: 'LM2596 Buck Converter',
+    category: 'power',
+    description: 'Step-down DC-DC switching regulator with multi-turn potentiometer, 3A peak output',
+    tags: ['buck', 'step-down', 'lm2596', 'converter', 'regulator', 'power', 'dcdc'],
+    color: '#1e3a8a',
+    accentColor: '#3b82f6',
+    symbol: 'BUCK',
+    width: 75,
+    height: 50,
+    pins: { power: ['IN+','IN-','OUT+','OUT-'] },
+    specs: { inVoltage: '4.5-40V', outVoltage: '1.25-35V Adj', current: '3A max', efficiency: '92%' }
+  },
+  {
+    id: 'coin-cell-cr2032',
+    name: 'CR2032 Coin Cell',
+    category: 'power',
+    packageType: 'Coin Cell Holder',
+    pinCount: 2,
+    description: '3V Lithium manganese dioxide coin battery with PCB spring clip holder for RTC & low-power backups',
+    tags: ['cr2032', 'coin cell', 'battery', '3v', 'rtc', 'backup'],
+    color: '#475569',
+    accentColor: '#94a3b8',
+    symbol: 'CR2032',
+    width: 45,
+    height: 45,
+    pins: { signal: ['+','-'] },
+    properties: { voltage: 3.0, capacity: '225mAh', chemistry: 'Li-MnO2' }
+  },
 
   // Logic ICs
   {
     id: 'l298n',
     name: 'L298N Motor Driver',
     category: 'logic',
-    description: 'Dual H-bridge motor driver IC, 2A per channel',
-    tags: ['l298n', 'motor driver', 'h-bridge', 'pwm', 'dual'],
+    packageType: 'Multiwatt15',
+    pinCount: 15,
+    description: 'Dual H-bridge high-power motor driver IC with heatsink, 2A per channel',
+    tags: ['l298n', 'motor driver', 'h-bridge', 'pwm', 'dual', 'stepper'],
     color: '#263238',
     accentColor: '#37474f',
     symbol: 'L298N',
@@ -523,22 +923,84 @@ export const COMPONENTS = [
   },
   {
     id: 'ne555',
-    name: 'NE555 Timer',
+    name: 'NE555 Timer IC',
     category: 'logic',
-    description: 'Classic 555 timer IC for oscillators, PWM, delays',
-    tags: ['555', 'timer', 'pwm', 'oscillator', 'classic', 'ne555'],
-    color: '#212121',
-    accentColor: '#424242',
+    packageType: 'DIP-8',
+    pinCount: 8,
+    description: 'Precision timer / oscillator IC for pulse generation, delays, and PWM',
+    tags: ['555', 'timer', 'pwm', 'oscillator', 'classic', 'ne555', 'dip8', 'ic'],
+    color: '#1e293b',
+    accentColor: '#4f46e5',
     symbol: '555',
     width: 60,
     height: 65,
     pins: { signal: ['TRIG','OUT','RST','CV','THR','DIS'], power: ['VCC','GND'] },
-    specs: { modes: 'Astable/Monostable', frequency: '100kHz max' }
+    specs: { modes: 'Astable/Monostable', frequency: '100kHz max', package: 'DIP-8' }
+  },
+  {
+    id: 'ic-74hc595',
+    name: '74HC595 Shift Register',
+    category: 'logic',
+    packageType: 'DIP-16',
+    pinCount: 16,
+    description: '8-bit serial-in, parallel-out shift register with 3-state output latches',
+    tags: ['74hc595', 'shift register', 'io expander', 'serial', 'parallel', 'dip16', 'logic'],
+    color: '#1e1b4b',
+    accentColor: '#6366f1',
+    symbol: '595',
+    width: 65,
+    height: 85,
+    pins: {
+      signal: ['DS','SHCP','STCP','OE','MR','Q7S'],
+      output: ['Q0','Q1','Q2','Q3','Q4','Q5','Q6','Q7'],
+      power: ['VCC','GND']
+    },
+    specs: { type: '8-bit SIPO', speed: '100MHz', voltage: '2-6V', package: 'DIP-16' }
+  },
+  {
+    id: 'ic-lm358',
+    name: 'LM358 Dual Op-Amp',
+    category: 'logic',
+    packageType: 'DIP-8',
+    pinCount: 8,
+    description: 'Dual low-power operational amplifier IC for analog signal processing',
+    tags: ['lm358', 'op-amp', 'amplifier', 'comparator', 'analog', 'dip8'],
+    color: '#0f172a',
+    accentColor: '#38bdf8',
+    symbol: 'LM358',
+    width: 60,
+    height: 65,
+    pins: {
+      signal: ['OUT1','IN1-','IN1+','IN2+','IN2-','OUT2'],
+      power: ['VCC','GND']
+    },
+    specs: { channels: 2, gainBandwidth: '1MHz', package: 'DIP-8' }
+  },
+  {
+    id: 'ic-74hc04',
+    name: '74HC04 Hex Inverter',
+    category: 'logic',
+    packageType: 'DIP-14',
+    pinCount: 14,
+    description: 'Hex inverter gate IC containing 6 independent NOT logic gates',
+    tags: ['74hc04', 'inverter', 'not gate', 'logic gate', 'cmos', 'dip14'],
+    color: '#0f172a',
+    accentColor: '#a855f7',
+    symbol: 'NOTx6',
+    width: 65,
+    height: 80,
+    pins: {
+      signal: ['1A','1Y','2A','2Y','3A','3Y','4A','4Y','5A','5Y','6A','6Y'],
+      power: ['VCC','GND']
+    },
+    specs: { gates: 6, logic: 'NOT Inverter', package: 'DIP-14' }
   },
   {
     id: 'mcp3008',
     name: 'MCP3008 ADC',
     category: 'logic',
+    packageType: 'DIP-16',
+    pinCount: 16,
     description: '8-channel 10-bit SPI ADC for analog input expansion',
     tags: ['mcp3008', 'adc', 'analog', 'spi', '10-bit', 'converter'],
     color: '#006064',
@@ -548,8 +1010,202 @@ export const COMPONENTS = [
     height: 80,
     pins: { signal: ['CH0','CH1','CH2','CH3','CH4','CH5','CH6','CH7','CS','DIN','DOUT','CLK'], power: ['VCC','VREF','AGND','DGND'] },
     specs: { channels: 8, resolution: '10-bit', interface: 'SPI' }
+  },
+  {
+    id: 'logic-level-shifter',
+    name: '4-Ch Level Shifter',
+    category: 'logic',
+    description: 'Bi-directional 4-channel voltage translator module (3.3V <-> 5.0V) with MOSFETs for I2C/SPI',
+    tags: ['level shifter', 'logic', 'voltage divider', '3.3v', '5v', 'bidirectional', 'i2c'],
+    color: '#065f46',
+    accentColor: '#10b981',
+    symbol: 'LVL4',
+    width: 55,
+    height: 50,
+    pins: {
+      signal: ['LV1','LV2','LV3','LV4','HV1','HV2','HV3','HV4'],
+      power: ['LV','GND_L','HV','GND_H']
+    },
+    specs: { channels: 4, lowVoltage: '1.8-3.3V', highVoltage: '2.8-5.5V', speed: 'Up to 2MHz' }
+  },
+  {
+    id: 'pc817-optocoupler',
+    name: 'PC817 Optocoupler',
+    category: 'logic',
+    packageType: 'DIP-4',
+    pinCount: 4,
+    description: 'Galvanic optical isolator IC with infrared emitter diode and NPN phototransistor',
+    tags: ['pc817', 'optocoupler', 'isolator', 'optical', 'dip4', 'isolation', 'protection'],
+    color: '#1e293b',
+    accentColor: '#475569',
+    symbol: 'PC817',
+    width: 50,
+    height: 50,
+    pins: { signal: ['ANODE','CATHODE','COLLECTOR','EMITTER'] },
+    specs: { isolation: '5000Vrms', package: 'DIP-4', ctr: '50-600%' }
+  },
+  {
+    id: 'pcf8574-io-expander',
+    name: 'PCF8574 I2C Expander',
+    category: 'logic',
+    packageType: 'DIP-16',
+    pinCount: 16,
+    description: '8-bit remote I/O port expander for I2C-bus with open-drain interrupt output',
+    tags: ['pcf8574', 'i2c', 'io expander', 'gpio', 'dip16', 'philips'],
+    color: '#1e1b4b',
+    accentColor: '#818cf8',
+    symbol: 'PCF8574',
+    width: 65,
+    height: 85,
+    pins: {
+      signal: ['A0','A1','A2','SDA','SCL','INT'],
+      output: ['P0','P1','P2','P3','P4','P5','P6','P7'],
+      power: ['VDD','VSS']
+    },
+    specs: { bus: 'I2C Standard 100kHz', address: '0x20-0x27', package: 'DIP-16' }
+  },
+  {
+    id: 'uln2003a-darlington',
+    name: 'ULN2003A Darlington',
+    category: 'logic',
+    packageType: 'DIP-16',
+    pinCount: 16,
+    description: 'High-voltage high-current 7-channel Darlington transistor array with common clamp diodes',
+    tags: ['uln2003', 'darlington', 'transistor array', 'stepper driver', 'dip16', 'inductive'],
+    color: '#0f172a',
+    accentColor: '#38bdf8',
+    symbol: 'ULN2003',
+    width: 65,
+    height: 85,
+    pins: {
+      signal: ['1B','2B','3B','4B','5B','6B','7B'],
+      output: ['1C','2C','3C','4C','5C','6C','7C'],
+      power: ['COM','GND']
+    },
+    specs: { channels: 7, current: '500mA/ch', voltage: '50V', package: 'DIP-16' }
   }
 ];
+
+// Curated list of common parts for the Quick-Access Side Shelf
+export const COMMON_PARTS = [
+  { id: 'resistor', label: 'Resistor', symbol: 'R', desc: '1kΩ Axial' },
+  { id: 'capacitor', label: 'Electrolytic', symbol: 'C', desc: '100µF Radial' },
+  { id: 'ceramic-capacitor', label: 'Ceramic Cap', symbol: 'CC', desc: '100nF (0.1µF)' },
+  { id: 'led', label: '5mm LED', symbol: 'LED', desc: 'Red Dome' },
+  { id: 'rgb-led', label: 'RGB LED', symbol: 'RGB', desc: '5mm 4-Pin' },
+  { id: 'diode-1n4007', label: '1N4007 Diode', symbol: 'D', desc: '1A Rectifier' },
+  { id: 'transistor-2n2222', label: '2N2222 NPN', symbol: 'Q', desc: 'TO-92 BJT' },
+  { id: 'mosfet-irf520', label: 'Power MOSFET', symbol: 'FET', desc: 'IRF520 9.2A' },
+  { id: 'ne555', label: 'NE555 Timer', symbol: '555', desc: 'DIP-8 Timer' },
+  { id: 'ic-74hc595', label: '74HC595 Shift', symbol: '595', desc: 'DIP-16 SIPO' },
+  { id: 'push-button', label: 'Push Button', symbol: 'BTN', desc: 'Tactile 6mm' },
+  { id: 'potentiometer', label: 'Potentiometer', symbol: 'POT', desc: '10kΩ Rotary' },
+  { id: 'bme280', label: 'BME280 Sensor', symbol: 'BME', desc: 'Temp/Press/Hum' },
+  { id: 'tp4056-charger', label: 'USB Charger', symbol: 'TP4056', desc: '1A Li-Ion USB-C' },
+];
+
+// Presets for the Quick Value Selector floating popover
+export const VALUE_PRESETS = {
+  resistor: [
+    { label: '220 Ω', value: 220, unit: 'Ω' },
+    { label: '330 Ω', value: 330, unit: 'Ω' },
+    { label: '1 kΩ', value: 1000, unit: 'Ω' },
+    { label: '4.7 kΩ', value: 4700, unit: 'Ω' },
+    { label: '10 kΩ', value: 10000, unit: 'Ω' },
+    { label: '100 kΩ', value: 100000, unit: 'Ω' },
+  ],
+  capacitor: [
+    { label: '1 µF', value: 1, unit: 'µF' },
+    { label: '10 µF', value: 10, unit: 'µF' },
+    { label: '47 µF', value: 47, unit: 'µF' },
+    { label: '100 µF', value: 100, unit: 'µF' },
+    { label: '470 µF', value: 470, unit: 'µF' },
+    { label: '1000 µF', value: 1000, unit: 'µF' },
+  ],
+  'ceramic-capacitor': [
+    { label: '22 pF', value: 22, unit: 'pF' },
+    { label: '100 pF', value: 100, unit: 'pF' },
+    { label: '1 nF', value: 1, unit: 'nF' },
+    { label: '10 nF', value: 10, unit: 'nF' },
+    { label: '100 nF', value: 100, unit: 'nF' },
+  ],
+  led: [
+    { label: 'Red', color: '#ef4444', voltage: 2.0 },
+    { label: 'Green', color: '#22c55e', voltage: 2.2 },
+    { label: 'Blue', color: '#3b82f6', voltage: 3.2 },
+    { label: 'Yellow', color: '#eab308', voltage: 2.1 },
+    { label: 'White', color: '#f8fafc', voltage: 3.3 },
+  ],
+  'rgb-led': [
+    { label: 'Diffused RGB', type: 'Common Cathode' },
+    { label: 'Clear RGB', type: 'Common Anode' },
+    { label: 'Cyan Pre-mix', color: '#06b6d4' },
+    { label: 'Purple Pre-mix', color: '#a855f7' },
+    { label: 'Amber Pre-mix', color: '#f59e0b' },
+  ],
+  'diode-1n4007': [
+    { label: '1N4007 (1000V)', model: '1N4007' },
+    { label: '1N4148 (Fast)', model: '1N4148' },
+    { label: 'Zener 3.3V', model: '3V3 Zener' },
+    { label: 'Zener 5.1V', model: '5V1 Zener' },
+  ],
+  'transistor-2n2222': [
+    { label: '2N2222 (NPN)', type: 'NPN' },
+    { label: '2N2907 (PNP)', type: 'PNP' },
+    { label: '2N3904 (NPN)', type: 'NPN' },
+  ],
+  'mosfet-irf520': [
+    { label: 'IRF520 (100V 9.2A)', model: 'IRF520' },
+    { label: 'IRLZ44N (55V 47A Logic)', model: 'IRLZ44N' },
+    { label: 'IRF3205 (55V 110A High-Pwr)', model: 'IRF3205' },
+    { label: '2N7000 (Small Signal)', model: '2N7000' },
+  ],
+  'inductor-axial': [
+    { label: '10 µH', value: 10, unit: 'µH' },
+    { label: '47 µH', value: 47, unit: 'µH' },
+    { label: '100 µH', value: 100, unit: 'µH' },
+    { label: '1 mH', value: 1000, unit: 'µH' },
+    { label: '10 mH', value: 10000, unit: 'µH' },
+  ],
+  potentiometer: [
+    { label: '1 kΩ', value: 1000, unit: 'Ω' },
+    { label: '5 kΩ', value: 5000, unit: 'Ω' },
+    { label: '10 kΩ', value: 10000, unit: 'Ω' },
+    { label: '50 kΩ', value: 50000, unit: 'Ω' },
+    { label: '100 kΩ', value: 100000, unit: 'Ω' },
+  ],
+};
+
+// Resistor standard 4-band EIA color calculation
+const DIGIT_COLORS = [
+  '#18181b', // 0 Black
+  '#78350f', // 1 Brown
+  '#dc2626', // 2 Red
+  '#ea580c', // 3 Orange
+  '#eab308', // 4 Yellow
+  '#16a34a', // 5 Green
+  '#2563eb', // 6 Blue
+  '#7c3aed', // 7 Violet
+  '#64748b', // 8 Gray
+  '#f8fafc', // 9 White
+];
+
+export function calculateResistorBands(ohms = 1000) {
+  const str = Math.round(ohms).toString();
+  if (str.length < 2) {
+    return ['#78350f', '#18181b', '#18181b', '#f59e0b'];
+  }
+  const digit1 = parseInt(str[0], 10);
+  const digit2 = parseInt(str[1], 10);
+  const multiplier = str.length - 2;
+
+  const band1 = DIGIT_COLORS[digit1] || '#78350f';
+  const band2 = DIGIT_COLORS[digit2] || '#18181b';
+  const band3 = DIGIT_COLORS[multiplier] || '#dc2626';
+  const band4 = '#f59e0b'; // Gold ±5% tolerance
+
+  return [band1, band2, band3, band4];
+}
 
 export const getComponentsByCategory = (categoryId) => {
   if (!categoryId || categoryId === 'all') return COMPONENTS;
@@ -561,6 +1217,7 @@ export const searchComponents = (query) => {
   const q = query.toLowerCase();
   return COMPONENTS.filter(c =>
     c.name.toLowerCase().includes(q) ||
+    (c.packageType && c.packageType.toLowerCase().includes(q)) ||
     c.description.toLowerCase().includes(q) ||
     c.tags.some(t => t.includes(q)) ||
     c.symbol.toLowerCase().includes(q)

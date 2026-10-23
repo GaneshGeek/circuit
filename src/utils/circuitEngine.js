@@ -61,22 +61,49 @@ export function getCompBaseType(component) {
   if (raw.includes('rp2040') || raw.includes('pico')) return 'rp2040';
   if (raw.includes('arduino-nano') || raw.includes('nano')) return 'arduino-nano';
   if (raw.includes('stm32')) return 'stm32';
+  if (raw.includes('esp8266') || raw.includes('nodemcu')) return 'esp8266-nodemcu';
+  if (raw.includes('attiny')) return 'attiny85';
   if (raw.includes('hc-sr04') || raw.includes('sonar') || raw.includes('ultrasonic')) return 'hc-sr04';
   if (raw.includes('dht22')) return 'dht22';
   if (raw.includes('dht11') || raw.includes('dht')) return 'dht11';
+  if (raw.includes('bme280') || raw.includes('bme')) return 'bme280';
+  if (raw.includes('vl53l0x') || raw.includes('tof')) return 'vl53l0x';
+  if (raw.includes('mq-2') || raw.includes('mq2') || raw.includes('gas')) return 'mq2-gas';
+  if (raw.includes('ds18b20') || raw.includes('1wire')) return 'ds18b20';
+  if (raw.includes('hx711') || raw.includes('load-cell')) return 'hx711';
+  if (raw.includes('rc522') || raw.includes('rfid')) return 'rc522-rfid';
+  if (raw.includes('joystick')) return 'joystick-module';
   if (raw.includes('servo')) return 'servo';
+  if (raw.includes('neopixel') || raw.includes('ws2812')) return 'neopixel-ring';
+  if (raw.includes('solenoid') || raw.includes('valve')) return 'solenoid-valve';
+  if (raw.includes('vibration') || raw.includes('haptic')) return 'vibration-motor';
   if (raw.includes('resistor')) return 'resistor';
+  if (raw.includes('rgb-led') || raw.includes('rgb')) return 'rgb-led';
   if (raw.includes('led')) return 'led';
   if (raw.includes('push-button') || raw.includes('button')) return 'push-button';
+  if (raw.includes('slide-switch') || raw.includes('spdt')) return 'slide-switch';
   if (raw.includes('potentiometer') || raw.includes('pot')) return 'potentiometer';
   if (raw.includes('buzzer')) return 'buzzer';
   if (raw.includes('pir')) return 'pir';
+  if (raw.includes('tm1637')) return 'tm1637-display';
+  if (raw.includes('max7219') || raw.includes('matrix')) return 'max7219-matrix';
   if (raw.includes('lcd-16x2') || raw.includes('16x2')) return 'lcd-16x2';
   if (raw.includes('oled')) return 'oled-128x64';
   if (raw.includes('soil')) return 'soil-moisture';
   if (raw.includes('ldr')) return 'ldr';
   if (raw.includes('relay')) return 'relay';
   if (raw.includes('dc-motor') || raw.includes('motor')) return 'dc-motor';
+  if (raw.includes('mosfet') || raw.includes('irf520')) return 'mosfet-irf520';
+  if (raw.includes('inductor')) return 'inductor-axial';
+  if (raw.includes('lora') || raw.includes('sx1278')) return 'lora-sx1278';
+  if (raw.includes('esp-01') || raw.includes('esp01')) return 'esp-01';
+  if (raw.includes('tp4056')) return 'tp4056-charger';
+  if (raw.includes('lm2596') || raw.includes('buck')) return 'buck-converter-lm2596';
+  if (raw.includes('cr2032') || raw.includes('coin')) return 'coin-cell-cr2032';
+  if (raw.includes('level-shifter') || raw.includes('shifter')) return 'logic-level-shifter';
+  if (raw.includes('pc817') || raw.includes('optocoupler')) return 'pc817-optocoupler';
+  if (raw.includes('pcf8574')) return 'pcf8574-io-expander';
+  if (raw.includes('uln2003')) return 'uln2003a-darlington';
   return raw;
 }
 
@@ -90,7 +117,7 @@ export function autoWireCircuit(components) {
   // Find primary microcontroller
   const mcu = components.find(c => {
     const type = getCompBaseType(c);
-    return ['arduino-uno', 'esp32', 'rp2040', 'arduino-nano', 'stm32'].includes(type);
+    return ['arduino-uno', 'esp32', 'rp2040', 'arduino-nano', 'stm32', 'esp8266-nodemcu', 'attiny85'].includes(type);
   });
 
   const wires = [];

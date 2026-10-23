@@ -1,0 +1,7 @@
+{
+  "name": "VoltCraft - Cloud EDA & Simulation Platform",
+  "description": "Free cloud-based electronics design, simulation, and hardware programming platform. AI-powered circuit design for Arduino, ESP32, Raspberry Pi Pico.",
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "summary":  "Implementation plan for the side-panel component library featuring a quick-access common shelf for resistors, capacitors, and ICs, visual package cards with specs and pin counts, drag-and-drop onto the workspace with snap grid, and an instant floating quick value selector.",
+  "updatedAt":  "2026-10-23T05:00:09.263152639Z",
+  "requestFeedback":  true,
+  "userFacing":  true
+}

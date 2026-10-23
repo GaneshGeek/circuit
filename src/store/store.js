@@ -46,8 +46,10 @@ export const useCircuitStore = create((set, get) => ({
   // Project state
   projectName: 'Untitled Project',
   projectId: null,
+  projectStatus: 'Draft', // 'Draft' | 'Simulating' | 'Completed'
   isDirty: false,
   lastSaved: null,
+  setProjectStatus: (status) => set({ projectStatus: status, isDirty: true }),
 
   // Firmware / Compilation state
   firmwareCode: `// VoltCraft - Hardware & Firmware Platform
@@ -391,6 +393,7 @@ void loop() {
       isSimulating: false,
       projectName: 'Untitled Project',
       projectId: null,
+      projectStatus: 'Draft',
       isDirty: false,
       compileStatus: 'idle',
       compileOutput: '',
@@ -401,8 +404,8 @@ void loop() {
 
   // Import/Export
   exportProject: () => {
-    const { components, wires, firmwareCode, projectName } = get();
-    return JSON.stringify({ version: '1.0', projectName, components, wires, firmwareCode }, null, 2);
+    const { components, wires, firmwareCode, projectName, projectStatus } = get();
+    return JSON.stringify({ version: '1.0', projectName, projectStatus: projectStatus || 'Draft', components, wires, firmwareCode }, null, 2);
   },
 
   importProject: (json) => {
@@ -413,6 +416,7 @@ void loop() {
         wires: data.wires || [],
         firmwareCode: data.firmwareCode || '',
         projectName: data.projectName || 'Imported Project',
+        projectStatus: data.projectStatus || 'Draft',
         isDirty: false,
       });
       return true;
@@ -424,13 +428,22 @@ void loop() {
 
 export const useAppStore = create((set) => ({
   // UI state
-  activePanel: 'editor', // dashboard | editor | community | profile
+  activePanel: 'dashboard', // dashboard | editor | community | profile
   rightPanelTab: 'code', // code | serial | properties
   leftPanelOpen: true,
   codePanelOpen: true,
   aiPanelOpen: true,
   quickBuilderOpen: false,
-  theme: 'dark',
+  theme: localStorage.getItem('voltcraft_theme') || 'light',
+  toggleTheme: () => set(s => {
+    const next = s.theme === 'light' ? 'dark' : 'light';
+    localStorage.setItem('voltcraft_theme', next);
+    return { theme: next };
+  }),
+  setTheme: (theme) => {
+    localStorage.setItem('voltcraft_theme', theme);
+    set({ theme });
+  },
 
   // AI Copilot
   aiMessages: [

@@ -22,7 +22,7 @@
   border: 1px solid var(--border-secondary);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(99,102,241,0.1);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
   z-index: 50;
   backdrop-filter: blur(20px);
 }
@@ -33,7 +33,7 @@
   gap: 10px;
   padding: 12px 14px;
   border-bottom: 1px solid var(--border-secondary);
-  background: rgba(255,255,255,0.02);
+  background: var(--bg-tertiary);
 }
 
 .props-name {
@@ -96,10 +96,10 @@
 .props-pin {
   font-size: 10px;
   padding: 2px 8px;
-  background: rgba(99,102,241,0.1);
-  border: 1px solid rgba(99,102,241,0.2);
+  background: rgba(79, 70, 229, 0.08);
+  border: 1px solid rgba(79, 70, 229, 0.2);
   border-radius: 4px;
-  color: var(--text-accent);
+  color: var(--accent-primary);
   font-family: 'JetBrains Mono', monospace;
   font-weight: 500;
 }
@@ -107,7 +107,7 @@
 /* Collapsed Side Strip Tabs */
 .collapsed-side-tab {
   width: 38px;
-  background: rgba(15, 23, 42, 0.95);
+  background: var(--bg-card);
   border-color: var(--border-secondary);
   border-style: solid;
   border-width: 0;
@@ -125,7 +125,7 @@
 }
 
 .collapsed-side-tab:hover {
-  background: rgba(30, 41, 59, 0.95);
+  background: var(--bg-card-hover);
 }
 
 .left-collapsed {
@@ -133,7 +133,7 @@
 }
 
 .left-collapsed:hover {
-  border-right-color: #6366f1;
+  border-right-color: var(--accent-primary);
 }
 
 .right-collapsed {
@@ -143,7 +143,7 @@
 }
 
 .right-collapsed:hover {
-  border-left-color: #38bdf8;
+  border-left-color: var(--accent-cyan);
 }
 
 .ai-collapsed {
@@ -151,16 +151,16 @@
 }
 
 .ai-collapsed:hover {
-  border-left-color: #a855f7;
+  border-left-color: var(--accent-primary);
 }
 
 .collapsed-icon {
-  color: #94a3b8;
+  color: var(--text-muted);
   transition: color 0.2s;
 }
 
 .collapsed-side-tab:hover .collapsed-icon {
-  color: #f8fafc;
+  color: var(--text-primary);
 }
 
 .collapsed-text {
@@ -168,7 +168,7 @@
   transform: rotate(180deg);
   font-size: 11px;
   font-weight: 700;
-  color: #94a3b8;
+  color: var(--text-muted);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   font-family: 'Inter', sans-serif;
@@ -177,7 +177,7 @@
 }
 
 .collapsed-side-tab:hover .collapsed-text {
-  color: #f8fafc;
+  color: var(--text-primary);
 }
 
 .collapsed-arrow {
